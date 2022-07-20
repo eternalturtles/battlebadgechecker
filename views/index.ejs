@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ETERNAL TURTLES - BATTLE BADGE CHECKER</title>
+		<link rel="stylesheet" href="/css/base.css">
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="/css/login.css">
+		<script type="text/javascript" src="/js/login.js"></script>
+		<script type="text/javascript" src="/js/app.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GSWXXRWE05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GSWXXRWE05');
+</script>
+	</head>
+	<body class="crt">
+
+<div class="monitor">
+  <div class="screen">
+    <div class="crt">
+    <div id="typewriter" class="text-shadow command">
+	
+			<% if (whitelist_out) { %>
+				<% if (typeof random_number != "undefined" && random_number) { %>
+					<% if (hasMessages) { %>
+						<p><%=  messages[0] %></p>
+					<% } else { %>
+						<p>Congrats, you've been whitelisted, please keep your eyes peeled on your twitter dm's for your battle badge. in the meantime, please submit your wallet</p>
+
+						<form action="/" method="post">
+							<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
+							<% if (filter) { %>
+							<input type="hidden" name="filter" value="<%= filter %>"/>
+							<% } %>
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+						</form>
+					<% } %>
+				<% } else{ %>
+					<% if (hasMessages) { %>
+						<p><%=  messages[0] %></p>
+					<% } else { %>
+						<p>Welcome, <%= user.username || user.username %></p>
+						<p>Thank you for your interest in helping save the turtles.</p>
+						<p>We are happy to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
+						<img class="battlebadge" src="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif">
+						<a class="downloadgif" href="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif" target="_blank">Download GIF</a>
+						<p>Lastly, we will also require your wallet address to add you to the whitelist database. You can only submit one wallet. If you submit a new one it will overwrite any existing wallet submitted.</p>
+						<form action="/" method="post">
+							<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
+							<% if (filter) { %>
+							<input type="hidden" name="filter" value="<%= filter %>"/>
+							<% } %>
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+						</form>
+					<% } %>
+				<% } %>
+			<% } else{ %>
+
+				<p>	Welcome, <%= user.username || user.username %></p>
+
+				<p>Thank you for your interest in enlisiting for duty.</p>
+
+				<p>Sorry, you have not yet been selected for duty. Check back daily to see if you have been selected</p>
+			<% } %>
+		
+    </div>
+
+
+
+    </div>
+    <div class="scan-line"></div>
+
+  </div>
+
+	<form action="/logout" method="post">
+							<button type="submit">Log out</button>
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+						</form>
+
+</div>
+			
+
+<section>
+
+		
+		<footer class="info">
+
+		</footer>
+	</body>
+</html>
+<script>	function setupTypewriter(t) {
+	    var HTML = t.innerHTML;
+
+	    t.innerHTML = "";
+
+	    var cursorPosition = 0,
+	        tag = "",
+	        writingTag = false,
+	        tagOpen = false,
+	        typeSpeed = 0,
+        tempTypeSpeed = 0;
+
+	    var type = function() {
+        
+	        if (writingTag === true) {
+	            tag += HTML[cursorPosition];
+	        }
+
+	        if (HTML[cursorPosition] === "<") {
+	            tempTypeSpeed = 0;
+	            
+				if( ["form", "input"].some(el => String(tag).includes(el))){
+					tagOpen = true;
+					writingTag = true;
+				} else {
+					if (tagOpen) {
+						tagOpen = false;
+						writingTag = true;
+					} else {
+						tag = "";
+						tagOpen = true;
+						writingTag = true;
+						tag += HTML[cursorPosition];
+					}
+				}
+	        }
+			if( ["form", "input"].some(el => String(tag).includes(el))){
+				tempTypeSpeed = 0;
+				writingTag = true;
+				if(tag.includes("</form>")){
+					t.innerHTML += tag;
+					tag = "";
+					tagOpen = false;
+				}
+			}
+	        if (!writingTag && tagOpen) {
+	            tag.innerHTML += HTML[cursorPosition];
+	        }
+	        if (!writingTag && !tagOpen) {
+	            if (HTML[cursorPosition] === " ") {
+	                tempTypeSpeed = 0;
+	            }
+	            else {
+	                tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+	            }
+	            t.innerHTML += HTML[cursorPosition];
+	        }
+	        if (writingTag === true && HTML[cursorPosition] === ">") {
+	            tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+				if(["form", "input"].some(el => String(tag).includes(el))){
+						writingTag = true;
+						tagOpen=true
+				} else {
+					if(["img"].some(el => String(tag).includes(el))){
+						tagOpen= true;
+					}
+					writingTag = false;
+					if (tagOpen) {
+						var newSpan = document.createElement("span");
+						t.appendChild(newSpan);
+						newSpan.innerHTML = tag;
+						if(["img"].some(el => String(tag).includes(el))){
+							tag = "";
+							tagOpen = false;
+						} else {
+							tag = newSpan.firstChild;
+						}
+					}
+				}
+	        }
+
+	        cursorPosition += 1;
+	        if (cursorPosition < HTML.length - 1) {
+	            setTimeout(type, tempTypeSpeed);
+	        }
+
+	    };
+
+	    return {
+	        type: type
+	    };
+	}
+
+	var typer = document.getElementById('typewriter');
+
+	typewriter = setupTypewriter(typewriter);
+
+	typewriter.type();
+</script>

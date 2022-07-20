@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ETERNAL TURTLES - BATTLE BADGE CHECKER</title>
+		<link rel="stylesheet" href="/css/base.css">
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="/css/login.css">
+		<script type="text/javascript" src="/js/login.js"></script>
+		<script type="text/javascript" src="/js/app.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GSWXXRWE05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GSWXXRWE05');
+</script>
+	</head>
+	<body class="crt">
+
+<div class="monitor">
+  <div class="screen">
+    <div class="crt">
+    <div id="typewriter" class="text-shadow command">
+        <p>random url</p>
+
+        <form action="/random-url" method="post">
+            <input class="new-todo" name="number" placeholder="Enter a random number" autofocus>
+            
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+
+        <% random_numbers.forEach(function(random) { %>
+            <form action="/random-url<%= random.url %>" method="post">
+                <div class="random_number">
+                    <p><%= random.number %></p>
+                    <button class="destroy" form="delete-<%= random.id %>">Delete</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                </div>
+            </form>
+            <form id="delete-<%= random.id %>" action="/random-url<%= random.url %>/delete" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+        <% }); %>
+        
+    </div>
+
+
+
+    </div>
+    <div class="scan-line"></div>
+
+  </div>
+
+	<form action="/logout" method="post">
+        <button type="submit">Log out</button>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    </form>
+
+</div>
+			
+
+<section>
+
+		
+		<footer class="info">
+
+		</footer>
+	</body>
+</html>
+<script>	function setupTypewriter(t) {
+	    var HTML = t.innerHTML;
+
+	    t.innerHTML = "";
+
+	    var cursorPosition = 0,
+	        tag = "",
+	        writingTag = false,
+	        tagOpen = false,
+	        typeSpeed = 0,
+        tempTypeSpeed = 0;
+
+	    var type = function() {
+        
+	        if (writingTag === true) {
+	            tag += HTML[cursorPosition];
+	        }
+
+	        if (HTML[cursorPosition] === "<") {
+	            tempTypeSpeed = 0;
+	            
+				if( ["form", "input"].some(el => String(tag).includes(el))){
+					tagOpen = true;
+					writingTag = true;
+				} else {
+					if (tagOpen) {
+						tagOpen = false;
+						writingTag = true;
+					} else {
+						tag = "";
+						tagOpen = true;
+						writingTag = true;
+						tag += HTML[cursorPosition];
+					}
+				}
+	        }
+			if( ["form", "input"].some(el => String(tag).includes(el))){
+				tempTypeSpeed = 0;
+				writingTag = true;
+				if(tag.includes("</form>")){
+					t.innerHTML += tag;
+					tag = "";
+					tagOpen = false;
+				}
+			}
+	        if (!writingTag && tagOpen) {
+	            tag.innerHTML += HTML[cursorPosition];
+	        }
+	        if (!writingTag && !tagOpen) {
+	            if (HTML[cursorPosition] === " ") {
+	                tempTypeSpeed = 0;
+	            }
+	            else {
+	                tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+	            }
+	            t.innerHTML += HTML[cursorPosition];
+	        }
+	        if (writingTag === true && HTML[cursorPosition] === ">") {
+	            tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+				if(["form", "input"].some(el => String(tag).includes(el))){
+						writingTag = true;
+						tagOpen=true
+				} else {
+					if(["img"].some(el => String(tag).includes(el))){
+						tagOpen= true;
+					}
+					writingTag = false;
+					if (tagOpen) {
+						var newSpan = document.createElement("span");
+						t.appendChild(newSpan);
+						newSpan.innerHTML = tag;
+						if(["img"].some(el => String(tag).includes(el))){
+							tag = "";
+							tagOpen = false;
+						} else {
+							tag = newSpan.firstChild;
+						}
+					}
+				}
+	        }
+
+	        cursorPosition += 1;
+	        if (cursorPosition < HTML.length - 1) {
+	            setTimeout(type, tempTypeSpeed);
+	        }
+
+	    };
+
+	    return {
+	        type: type
+	    };
+	}
+
+	var typer = document.getElementById('typewriter');
+
+	typewriter = setupTypewriter(typewriter);
+
+	typewriter.type();
+</script>

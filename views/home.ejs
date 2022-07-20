@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ETERNAL TURTLES - BATTLE BADGE CHECKER</title>
+		<link rel="stylesheet" href="/css/base.css">
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="/css/login.css">
+		<script type="text/javascript" src="/js/login.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GSWXXRWE05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GSWXXRWE05');
+</script>
+	</head>
+	<body class="crt">
+
+<div class="monitor">
+  <div class="screen">
+    <div class="crt">
+    <div id="typewriter" class="text-shadow command">
+		<% if (typeof number != "undefined" && number) { %>
+			welcome to the page, please <a href="/login/federated/twitter/?number=<%=number%>">Sign in with Twitter</a> and you'll become whitelisted.
+		<% } else { %>
+<pre id="taag_font_Banner3" style="float:left;" class="fig" contenteditable="true">######## ##     ## ########  ########  ######  
+   ##    ##     ## ##     ##    ##    ##    ## 
+   ##    ##     ## ##     ##    ##    ##       
+   ##    ##     ## ########     ##     ######  
+   ##    ##     ## ##   ##      ##          ## 
+   ##    ##     ## ##    ##     ##    ##    ## 
+   ##     #######  ##     ##    ##     ######  </pre>
+<div class="lineone">Welcome to the Eternal Turtles Battle Badge checker.</div>                                                       
+
+<div class="lineone"> #Set terminal/boot</div>
+<div class="lineone"> Loading...</div>
+<div class="lineone"> .</div>
+<div class="lineone"> ..</div>
+<div class="lineone"> ...</div>
+<div class="lineone"> ....</div>
+<div class="lineone"> .....</div>
+<div class="lineone"> TERMINAL LOADED</div>
+
+<div class="linetwo">Turtle Island is at risk and we need recuits such as yourself to help prevent the rainbow meteor from crashing into the Island.</div>
+
+  Please <a href="/login/federated/twitter">Sign in with Twitter</a> to see if you have been selected to help fight the battle. 
+
+    </div>
+	<% } %>
+    </div>
+    <div class="scan-line"></div>
+  </div>
+
+</div>
+
+
+
+
+
+<section>
+
+		
+		<footer class="info">
+		
+		</footer>
+	</body>
+</html>
+<script>	function setupTypewriter(t) {
+	    var HTML = t.innerHTML;
+
+	    t.innerHTML = "";
+
+	    var cursorPosition = 0,
+	        tag = "",
+	        writingTag = false,
+	        tagOpen = false,
+	        typeSpeed = 0,
+        tempTypeSpeed = 0;
+
+	    var type = function() {
+        
+	        if (writingTag === true) {
+	            tag += HTML[cursorPosition];
+	        }
+
+	        if (HTML[cursorPosition] === "<") {
+	            tempTypeSpeed = 0;
+	            if (tagOpen) {
+	                tagOpen = false;
+	                writingTag = true;
+	            } else {
+	                tag = "";
+	                tagOpen = true;
+	                writingTag = true;
+	                tag += HTML[cursorPosition];
+	            }
+	        }
+	        if (!writingTag && tagOpen) {
+	            tag.innerHTML += HTML[cursorPosition];
+	        }
+	        if (!writingTag && !tagOpen) {
+	            if (HTML[cursorPosition] === " ") {
+	                tempTypeSpeed = 0;
+	            }
+	            else {
+	                tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+	            }
+	            t.innerHTML += HTML[cursorPosition];
+	        }
+	        if (writingTag === true && HTML[cursorPosition] === ">") {
+	            tempTypeSpeed = (Math.random() * typeSpeed) + 10;
+	            writingTag = false;
+	            if (tagOpen) {
+	                var newSpan = document.createElement("span");
+	                t.appendChild(newSpan);
+	                newSpan.innerHTML = tag;
+	                tag = newSpan.firstChild;
+	            }
+	        }
+
+	        cursorPosition += 1;
+	        if (cursorPosition < HTML.length - 1) {
+	            setTimeout(type, tempTypeSpeed);
+	        }
+
+	    };
+
+	    return {
+	        type: type
+	    };
+	}
+
+	var typer = document.getElementById('typewriter');
+
+	typewriter = setupTypewriter(typewriter);
+
+	typewriter.type();
+</script>
